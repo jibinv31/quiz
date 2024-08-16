@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Quiz Application</title>
     <style>
+        /* Styling for the overall page */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -13,6 +14,7 @@
             background-color: #f4f4f4;
         }
 
+        /* Styling for the quiz container */
         #quiz-container {
             max-width: 500px;
             margin: auto;
@@ -23,6 +25,7 @@
             background-color: #fff;
         }
 
+        /* Styling for each quiz option */
         .option {
             display: block;
             margin: 10px 0;
@@ -33,32 +36,42 @@
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
+        /* Hover effect for options */
         .option:hover {
             background-color: #e0e0e0;
         }
 
+        /* Styling for the selected option */
         .selected {
             background-color: #a0c4ff;
-            /* Darker background color for selected option */
+            /* Darker blue background for selected option */
             border-color: #0056b3;
-            /* Darker border color */
+            /* Darker blue border color */
         }
 
+        /* Styling for a correct answer */
         .correct {
             background-color: #c8e6c9;
+            /* Light green background for correct answers */
             border-color: #66bb6a;
+            /* Green border for correct answers */
         }
 
+        /* Styling for a wrong answer */
         .wrong {
             background-color: #ffcdd2;
+            /* Light red background for wrong answers */
             border-color: #e57373;
+            /* Red border for wrong answers */
         }
 
+        /* Styling for the result text */
         #result {
             margin-top: 20px;
             font-size: 1.2em;
         }
 
+        /* Styling for the Start Quiz button */
         #start-quiz {
             padding: 10px 20px;
             font-size: 18px;
@@ -70,10 +83,12 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Hover effect for the Start Quiz button */
         #start-quiz:hover {
             background-color: #0056b3;
         }
 
+        /* Styling for the Submit Answer button */
         #submit-answer {
             padding: 10px 20px;
             font-size: 18px;
@@ -85,14 +100,17 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Hover effect for the Submit Answer button */
         #submit-answer:hover {
             background-color: #218838;
         }
 
+        /* Container for theme selection buttons */
         #theme-selector {
             margin-bottom: 20px;
         }
 
+        /* Styling for each theme button */
         .theme-button {
             padding: 5px 10px;
             margin: 5px;
