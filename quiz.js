@@ -1,3 +1,4 @@
+// An array to store all the quiz questions, options, and correct answers
 const quizData = [
     {
         question: "What is the result of 5 + 3 * 2?",
@@ -15,118 +16,105 @@ const quizData = [
         correct: "1"
     },
     {
-        question: "Which of the following will evaluate to true?",
-        options: ["2 > 3", "2 < 3", "2 == 3", "2 === '2'"],
-        correct: "2 < 3"
-    },
-    {
-        question: "What is the output of `++a` if `a = 2`?",
-        options: ["2", "3", "1", "4"],
-        correct: "3"
-    },
-    {
-        question: "Which array method removes the last element?",
-        options: ["push()", "pop()", "splice()", "shift()"],
-        correct: "pop()"
-    },
-    {
-        question: "Which method is used to combine all elements of an array into a single string?",
-        options: ["join()", "map()", "filter()", "reduce()"],
-        correct: "join()"
-    },
-    {
-        question: "What will `['a', 'b', 'c'].map(x => x.toUpperCase())` return?",
-        options: ["['a', 'b', 'c']", "['A', 'B', 'C']", "['A', 'b', 'C']", "['a', 'B', 'C']"],
-        correct: "['A', 'B', 'C']"
-    },
-    {
         question: "Which method is used to add an element to the beginning of an array?",
         options: ["push()", "pop()", "shift()", "unshift()"],
         correct: "unshift()"
     },
     {
-        question: "What does `arr.reduce((a, b) => a + b)` do?",
-        options: ["Adds all elements of `arr`", "Subtracts all elements of `arr`", "Concatenates all elements of `arr`", "Multiplies all elements of `arr`"],
-        correct: "Adds all elements of `arr`"
+        question: "Which operator is used to compare both value and type in JavaScript?",
+        options: ["==", "===", "!=", "!=="],
+        correct: "==="
     }
 ];
 
-// Using Array Methods to manipulate data
-let quizDataCopy = quizData.slice(); // Using slice() to create a shallow copy of the quizData array
-quizDataCopy.push({
-    question: "Which of the following is not a primitive data type in JavaScript?",
-    options: ["Number", "String", "Boolean", "Object"],
-    correct: "Object"
-}); // Using push() to add a new question
-quizDataCopy.splice(2, 1); // Using splice() to remove the third question from the copy
-const easyQuestions = quizDataCopy.filter(q => q.options.length === 4); // Using filter() to get questions with exactly four options
-
-// Using Array.map() and reduce()
-const optionLengths = quizData.map(q => q.options.length); // Getting the length of options array for each question
-const totalOptions = optionLengths.reduce((total, length) => total + length, 0); // Summing all option lengths
-
+// Variables to keep track of the current question, score, and whether the question has been answered
 let currentQuestion = 0;
 let score = 0;
 let answered = false;
 
+// Event listener for the "Start Quiz" button
 document.getElementById('start-quiz').addEventListener('click', () => {
+
     document.getElementById('quiz-container').style.display = 'block';
+
     document.getElementById('start-quiz').style.display = 'none';
+
     loadQuestion();
 });
 
+// Function to load a question and its options into the quiz
 function loadQuestion() {
+    // Get the elements where the question and result will be displayed
     const questionElement = document.getElementById('question');
     const options = document.querySelectorAll('.option');
     const resultElement = document.getElementById('result');
 
+    // Clear any previous result text and reset the answered flag
     resultElement.textContent = '';
     answered = false;
 
+    // Display the current question text
     questionElement.textContent = quizData[currentQuestion].question;
+
+    // Loop through the options and display them
     options.forEach((option, index) => {
         option.textContent = quizData[currentQuestion].options[index];
-        option.classList.remove('selected', 'correct', 'wrong');
+        option.classList.remove('selected', 'correct', 'wrong'); // Reset any previous selection or correct/wrong styles
     });
 }
 
+// Event listener for the "Submit Answer" button
 document.getElementById('submit-answer').addEventListener('click', () => {
+
     if (!answered) {
+
         const selectedOption = document.querySelector('.option.selected');
+
         if (selectedOption) {
+
             answered = true;
+
             if (selectedOption.textContent === quizData[currentQuestion].correct) {
                 score++;
                 selectedOption.classList.add('correct');
                 document.getElementById('result').textContent = "Correct!";
             } else {
                 selectedOption.classList.add('wrong');
-                document.getElementById('result').textContent = `Wrong! The correct answer is: ${quizData[currentQuestion].correct}`;
+                document.getElementById('result').textContent = `Wrong! The correct answer is: ${quizData[currentQuestion].correct}`; // Display the correct answer
             }
 
-            currentQuestion++;
+            currentQuestion++; // Move to the next question
+            // Check if there are more questions
             if (currentQuestion < quizData.length) {
+                // Load the next question after a short delay
                 setTimeout(loadQuestion, 1500);
             } else {
+                // Display the final score after a short delay
                 setTimeout(() => {
                     document.getElementById('quiz-container').innerHTML = `<h2>You scored ${score}/${quizData.length}</h2>`;
                 }, 1500);
             }
         } else {
+            // If no option is selected, alert the user
             alert("Please select an option before submitting.");
         }
     }
 });
 
+// Event listeners for each option button (to select an answer)
 document.querySelectorAll('.option').forEach(option => {
     option.addEventListener('click', () => {
+
         if (!answered) {
+
             document.querySelectorAll('.option').forEach(option => option.classList.remove('selected'));
+
             option.classList.add('selected');
         }
     });
 });
 
+// Function to change the theme of the quiz (background colors)
 function changeTheme(backgroundColor, containerColor) {
     document.body.style.backgroundColor = backgroundColor;
     document.getElementById('quiz-container').style.backgroundColor = containerColor;
